@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeviceListComponent } from './device-list.component';
+import { DeviceDialogComponent } from './device-dialog.component';
 
-describe('DeviceListComponent', () => {
-  let component: DeviceListComponent;
-  let fixture: ComponentFixture<DeviceListComponent>;
+describe('DeviceDialogComponent', () => {
+  let component: DeviceDialogComponent;
+  let fixture: ComponentFixture<DeviceDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DeviceListComponent]
+      imports: [DeviceDialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DeviceListComponent);
+    fixture = TestBed.createComponent(DeviceDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

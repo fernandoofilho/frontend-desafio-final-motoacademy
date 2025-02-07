@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid;
+  border-radius: 0.5rem;
+  padding: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.image-container {
+  width: 150px;
+  height: 150px;
+  background-color: lightgray;
+}
+
+.content {
+  flex-grow: 1;
+  background-color: lightblue;
+}
+
+.title{
+    
+}
