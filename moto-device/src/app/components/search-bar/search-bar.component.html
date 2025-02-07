@@ -1,12 +1,15 @@
 <div class="search-bar">
   <!-- <mat-icon matPrefix>search</mat-icon> -->
   <div class="icon-container">
-    <i class="fa-solid fa-magnifying-glass" style="font-size: 24px; color: #637587;"></i>
+    <i
+      class="fa-solid fa-magnifying-glass"
+      style="font-size: 24px; color: #637587"
+    ></i>
   </div>
-  <input class="input-container"
-  placeholder="Busque um modelo"
-  [(ngModel)]="searchQuery"
-  (input)="onSearchChange($event)"
+  <input
+    class="input-container"
+    placeholder="Busque um modelo"
+    [(ngModel)]="searchQuery"
+    (input)="onSearchChange($event)"
   />
 </div>
-
