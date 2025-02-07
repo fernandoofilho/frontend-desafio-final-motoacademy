@@ -1,24 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SearchService } from '../../services/search.service';
 import { CommonModule } from '@angular/common';
-import { OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ApiService } from '../../services/api.service';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-device-list',
-  standalone:true,
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './device-list.component.html',
-  styleUrl: './device-list.component.css'
+  styleUrl: './device-list.component.css',
 })
-export class DeviceListComponent implements OnInit{
+export class DeviceListComponent implements OnInit, OnDestroy {
+  searchQuery$!: Observable<string>;
+  private destroy$ = new Subject<void>();
 
-  searchQuery!: Observable<string>;
-
-  constructor(private searchService: SearchService){}
+  constructor(
+    private searchService: SearchService,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit(): void {
-    this.searchQuery = this.searchService.searchQuery$;
+    this.searchQuery$ = this.searchService.searchQuery$;
+
+    this.searchQuery$
+      .pipe(
+        takeUntil(this.destroy$),
+        debounceTime(300), 
+        distinctUntilChanged()
+      )
+      .subscribe((query) => {
+        if (query) {
+          this.apiService.search(query).subscribe((response) => {
+            console.log('API response:', response);
+          });
+        }
+      });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
