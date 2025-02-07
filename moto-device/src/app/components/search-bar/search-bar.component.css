@@ -1,0 +1,39 @@
+@import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+
+
+.search-bar{
+  height: 48px;
+  min-width: 160px;
+  width: 928px;
+  display: flex;
+  background-color: #F0F2F5;
+  border-radius: 12px;
+}
+
+.icon-container{
+  background-color: #F0F2F5;
+  padding-left: 16px;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+
+}
+
+.input-container{
+  background-color: #F0F2F5;
+  display: flex;
+  justify-content: left;
+  /* align-content: center; */
+  padding: 8px 16px 8px 8px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border: 0px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #637587;
+  width: 100%;
+}
+
