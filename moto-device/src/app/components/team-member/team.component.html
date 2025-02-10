@@ -1,0 +1,26 @@
+<div *ngIf="member" class="member">
+  <img
+    src="{{ member.photoPath }}"
+    alt="a photo of {{ member.name }}!"
+    class="image"
+  />
+  <h3>{{ member.name }}</h3>
+  <div class="middle">
+    <a href="{{ member.github }}" target="_blank">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+        alt="GitHub Icon"
+        width="40"
+        class="icon"
+      />
+    </a>
+    <a href="{{ member.linkedin }}" target="_blank">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+        alt="Linkedin Icon"
+        width="40"
+        class="icon"
+      />
+    </a>
+  </div>
+</div>

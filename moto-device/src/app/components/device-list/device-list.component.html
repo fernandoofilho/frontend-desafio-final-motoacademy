@@ -1,3 +1,9 @@
-<div>
-  <h3>Search Query: {{ searchQuery$ | async }}</h3>
+<div class="devices-list" [@slideDown]>
+  <div *ngFor="let device of deviceLists">
+    <app-device-card
+      [title]="getDeviceName(device)"
+      [description]="getDeviceDescription(device)"
+      [deviceData]="device"
+    />
+  </div>
 </div>
