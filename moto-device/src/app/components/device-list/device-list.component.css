@@ -1,0 +1,5 @@
+.devices-list{
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 750px;
+}
