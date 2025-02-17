@@ -2,18 +2,24 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SearchService } from '../../services/search.service';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, combineLatest } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil,
+  startWith,
+} from 'rxjs/operators';
 import { Device } from '../../../shared/models/device.model';
 import { DeviceCardComponent } from '../device-card/device-card.component';
 import { GroupFilterService } from '../../services/group-filter.service';
 import { YearFilterService } from '../../services/year-filter.service';
 import { animate, style, transition, trigger } from '@angular/animations';
-
+import { searchQuery } from '../../shared/types/search';
+import { NoContentComponent } from '../no-content/no-content.component';
 @Component({
   selector: 'app-device-list',
   standalone: true,
-  imports: [CommonModule, DeviceCardComponent],
+  imports: [CommonModule, DeviceCardComponent, NoContentComponent],
   animations: [
     trigger('slideDown', [
       transition(':enter', [
@@ -34,7 +40,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   templateUrl: './device-list.component.html',
   styleUrl: './device-list.component.css',
 })
-export class DeviceListComponent implements OnInit, OnDestroy {
+export class DeviceListComponent implements OnDestroy, OnInit {
   deviceLists: Device[] = [];
 
   searchQuery$!: Observable<string>;
@@ -49,16 +55,30 @@ export class DeviceListComponent implements OnInit, OnDestroy {
     private filterYearService: YearFilterService,
     private apiService: ApiService
   ) {}
-
   ngOnInit(): void {
     this.searchQuery$ = this.searchService.searchQuery$;
     this.GroupQuery$ = this.FilterGroupService.groupQuery$;
     this.yearQuery$ = this.filterYearService.yearQuery$;
 
-    this.searchQuery$
-      .pipe(takeUntil(this.destroy$), debounceTime(300), distinctUntilChanged())
-      .subscribe((query) => {
+    combineLatest([
+      this.searchQuery$.pipe(
+        startWith(''),
+        debounceTime(300),
+        distinctUntilChanged()
+      ),
+      this.GroupQuery$.pipe(startWith(''), distinctUntilChanged()),
+      this.yearQuery$.pipe(
+        startWith(''),
+        debounceTime(300),
+        distinctUntilChanged()
+      ),
+    ])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([search, group, year]) => {
+        const query: searchQuery = { search, group, year };
         if (query) {
+          console.log(query);
+          
           this.apiService.search(query).subscribe((response) => {
             this.setDeviceList(response);
           });

@@ -3,22 +3,30 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/environment';
 import { Device } from '../../shared/models/device.model';
-
+import { searchQuery } from '../shared/types/search';
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  search(model: string, year?: string, serie?: string): Observable<Device[]> {
-    const url = `${environment.apiUrl}search/model`;
-    const params = new HttpParams();
-    params.set('model', model);
-    params.set('year', year || '');
-    params.set('serie', serie || '');
+  search(search: searchQuery): Observable<Device[]> {
+    const url = `${environment.apiUrl}search/filter`;
+    let params = new HttpParams();
+
+    params = params.set('search', search.search);
+
+    if (search.year) {
+      params = params.set('year', search.year);
+    }
+
+    if (search.group) {
+      params = params.set('group', search.group);
+    }
 
     return this.http.get<Device[]>(url, { params });
   }
+
   getRandom(): Observable<Device[]> {
     const url = `${environment.apiUrl}random`;
 

@@ -1,4 +1,4 @@
-<div class="devices-list" [@slideDown]>
+<div class="devices-list" [@slideDown] *ngIf="deviceLists.length > 0">
   <div *ngFor="let device of deviceLists">
     <app-device-card
       [title]="getDeviceName(device)"
@@ -6,4 +6,7 @@
       [deviceData]="device"
     />
   </div>
+</div>
+<div class="no-content" *ngIf="deviceLists.length == 0">
+  <app-no-content />
 </div>
