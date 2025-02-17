@@ -1,1 +1,10 @@
-<p>group-filter works!</p>
+<mat-form-field>
+  <mat-label>Grupo de Devices</mat-label>
+  <mat-select (valueChange)="onSelectChange($event)">
+    @for (deviceGroup of groups; track deviceGroup) {
+    <mat-option [value]="deviceGroup.value">{{
+      deviceGroup.viewValue
+    }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
