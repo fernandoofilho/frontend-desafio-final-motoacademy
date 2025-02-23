@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { YearFilterComponent } from '../year-filter/year-filter.component';
-import { GroupFilterComponent } from '../group-filter/group-filter.component';
-import { YearFilterService } from '../../services/year-filter.service';
-import { GroupFilterService } from '../../services/group-filter.service';
-import { SearchService } from '../../services/search.service';
+import { GroupFilterService } from '../../services/filters/group-filter.service';
+import { SearchService } from '../../services/filters/search.service';
+import { YearFilterService } from '../../services/filters/year-filter.service';
+import { FiltersModule } from '../filters/filters.module';
 
 @Component({
   selector: 'app-filter-accordion',
-  imports: [MatExpansionModule, YearFilterComponent, GroupFilterComponent],
+  imports: [MatExpansionModule, FiltersModule],
   templateUrl: './filter-accordion.component.html',
   styleUrl: './filter-accordion.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

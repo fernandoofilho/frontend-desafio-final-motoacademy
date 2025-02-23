@@ -10,9 +10,9 @@ import {
 } from 'rxjs/operators';
 import { Device } from '../../../shared/models/device.model';
 import { ApiService } from '../../services/api.service';
-import { GroupFilterService } from '../../services/group-filter.service';
-import { SearchService } from '../../services/search.service';
-import { YearFilterService } from '../../services/year-filter.service';
+import { GroupFilterService } from '../../services/filters/group-filter.service';
+import { SearchService } from '../../services/filters/search.service';
+import { YearFilterService } from '../../services/filters/year-filter.service';
 import { searchQuery } from '../../shared/types/search';
 import { DeviceCardComponent } from '../device-card/device-card.component';
 import { SkeletonDeviceListComponent } from '../skeleton-device-list/skeleton-device-list.component';

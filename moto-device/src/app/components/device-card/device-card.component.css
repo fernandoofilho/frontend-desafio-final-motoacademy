@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: row;
-  border: 2px solid;
+  border: 2px solid rgba(255, 0, 0, 0.2); 
   min-width: 1000px;
   border-radius: 0.5rem;
   padding: 3px;

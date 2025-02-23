@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
-import { DeviceGroup } from '../../shared/types/deviceGroup';
-import { GroupFilterService } from '../../services/group-filter.service';
+import { GroupFilterService } from '../../../services/filters/group-filter.service';
+import { DeviceGroup } from '../../../shared/types/deviceGroup';
 
 @Component({
   selector: 'app-group-filter',
-  imports: [MatSelectModule],
+  standalone: false,
   templateUrl: './group-filter.component.html',
   styleUrl: './group-filter.component.css',
 })
