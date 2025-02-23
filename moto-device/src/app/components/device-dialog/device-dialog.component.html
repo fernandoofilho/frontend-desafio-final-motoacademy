@@ -1,17 +1,22 @@
 <div class="container">
-  <div class="image">
-    <img src="" alt="" />
-  </div>
   <div class="title">
     <h1>
       {{ dataSource?.Model }}
     </h1>
   </div>
-  <div class="description">
-    <div class="content" *ngFor="let item of dataSource?.specs | keyvalue">
-      <div *ngIf="item.key.length > 0">
-        <h2>{{ item.key }}:</h2>
-        {{ item.value }}
+  <div class="content-container">
+    <img
+      *ngIf="dataSource"
+      src="{{ getImageLink(dataSource.src) }}"
+      alt=""
+      class="device-dialog-image"
+    />
+    <div class="description">
+      <div class="content" *ngFor="let item of dataSource?.specs | keyvalue">
+        <div *ngIf="item.key.length > 0">
+          <h2>{{ item.key }}:</h2>
+          {{ item.value }}
+        </div>
       </div>
     </div>
   </div>

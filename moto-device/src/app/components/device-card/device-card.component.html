@@ -1,7 +1,5 @@
 <div class="container" (click)="openDialog()">
-  <div class="image-container" *ngIf="image">
-    <img src="" alt="" />
-  </div>
+  <img *ngIf="image" src="{{ image }}" alt="" class="image" />
   <div class="content">
     <div class="title">
       <h3>

@@ -1,12 +1,17 @@
-<div class="devices-list" [@slideDown] *ngIf="deviceLists.length > 0">
+<div class="devices-list" *ngIf="!isLoading">
   <div *ngFor="let device of deviceLists">
     <app-device-card
       [title]="getDeviceName(device)"
       [description]="getDeviceDescription(device)"
       [deviceData]="device"
+      [image]="getImageLink(device.src)"
     />
   </div>
 </div>
-<div class="no-content" *ngIf="deviceLists.length == 0">
-  <app-no-content />
+<div class="devices-list" *ngIf="isLoading">
+  <app-skeleton-device-list></app-skeleton-device-list>
+</div>
+
+<div *ngIf="noContent">
+  Sem resultados para sua pesquisa :(
 </div>

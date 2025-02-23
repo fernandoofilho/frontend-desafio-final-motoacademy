@@ -10,8 +10,13 @@ import { GroupFilterService } from '../../services/group-filter.service';
   styleUrl: './group-filter.component.css',
 })
 export class GroupFilterComponent {
-  constructor(private groupFilterService: GroupFilterService) {}
+  selectedGroup: string = '';
 
+  constructor(private groupFilterService: GroupFilterService) {
+    this.groupFilterService.groupQuery$.subscribe((value) => {
+      this.selectedGroup = value;
+    });
+  }
   groups: DeviceGroup[] = [
     {
       value: 'Moto G',
@@ -34,7 +39,6 @@ export class GroupFilterComponent {
       viewValue: 'Série Razr',
     },
   ];
-
   onSelectChange(value: string) {
     this.groupFilterService.setGroupQuery(value);
   }

@@ -1,25 +1,27 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SearchService } from '../../services/search.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../services/api.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
-  takeUntil,
   startWith,
+  takeUntil,
 } from 'rxjs/operators';
 import { Device } from '../../../shared/models/device.model';
-import { DeviceCardComponent } from '../device-card/device-card.component';
+import { ApiService } from '../../services/api.service';
 import { GroupFilterService } from '../../services/group-filter.service';
+import { SearchService } from '../../services/search.service';
 import { YearFilterService } from '../../services/year-filter.service';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { searchQuery } from '../../shared/types/search';
-import { NoContentComponent } from '../no-content/no-content.component';
+import { DeviceCardComponent } from '../device-card/device-card.component';
+import { SkeletonDeviceListComponent } from '../skeleton-device-list/skeleton-device-list.component';
+import getSrc from '../../shared/functions/get_src';
+
 @Component({
   selector: 'app-device-list',
   standalone: true,
-  imports: [CommonModule, DeviceCardComponent, NoContentComponent],
+  imports: [CommonModule, DeviceCardComponent, SkeletonDeviceListComponent],
   animations: [
     trigger('slideDown', [
       transition(':enter', [
@@ -38,14 +40,16 @@ import { NoContentComponent } from '../no-content/no-content.component';
     ]),
   ],
   templateUrl: './device-list.component.html',
-  styleUrl: './device-list.component.css',
+  styleUrls: ['./device-list.component.css'],
 })
 export class DeviceListComponent implements OnDestroy, OnInit {
   deviceLists: Device[] = [];
-
   searchQuery$!: Observable<string>;
   yearQuery$!: Observable<string>;
   GroupQuery$!: Observable<string>;
+
+  isLoading: boolean = false;
+  noContent: boolean = false;
 
   private destroy$ = new Subject<void>();
 
@@ -55,6 +59,7 @@ export class DeviceListComponent implements OnDestroy, OnInit {
     private filterYearService: YearFilterService,
     private apiService: ApiService
   ) {}
+
   ngOnInit(): void {
     this.searchQuery$ = this.searchService.searchQuery$;
     this.GroupQuery$ = this.FilterGroupService.groupQuery$;
@@ -75,10 +80,11 @@ export class DeviceListComponent implements OnDestroy, OnInit {
     ])
       .pipe(takeUntil(this.destroy$))
       .subscribe(([search, group, year]) => {
+        this.isLoading = true; 
+        this.noContent = false; 
+
         const query: searchQuery = { search, group, year };
-        if (query) {
-          console.log(query);
-          
+        if (Object.values(query).some((value) => value?.length > 0)) {
           this.apiService.search(query).subscribe((response) => {
             this.setDeviceList(response);
           });
@@ -92,6 +98,12 @@ export class DeviceListComponent implements OnDestroy, OnInit {
 
   setDeviceList(devices: Device[]) {
     this.deviceLists = devices;
+    this.isLoading = false; 
+    this.noContent = devices.length === 0; 
+  }
+
+  getImageLink(path: string) {
+    return getSrc(path);
   }
 
   getDeviceName(device: Device): string {

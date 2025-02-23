@@ -4,5 +4,17 @@
 
 .description {
   overflow-y: auto;
-  max-height: 600px;
+  max-height: 650px;
+  width: 100%;
+}
+
+.device-dialog-image{
+  width: 400px;
+  margin-right: 32px;
+}
+
+.content-container { 
+  display: flex;
+  flex: column;
+  width: auto;
 }

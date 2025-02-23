@@ -1,10 +1,10 @@
-.devices-list{
-    overflow-y: auto;
-    overflow-x: auto;
+.devices-list {
+    overflow-y: auto;   
+    overflow-x: auto;   
     max-height: 750px;
-}
-
-.no-content{
-    width: 100%;
-    transform: translateX(200px);
-}
+  }
+  
+  .devices-list::-webkit-scrollbar {
+    display: none; 
+  }
+  

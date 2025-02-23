@@ -21,4 +21,10 @@ export class FilterAccordionComponent {
     private groupFilterService: GroupFilterService,
     private searchService: SearchService
   ) {}
+
+  clearFilters() {
+    this.yearFilterService.setYearQuery('');
+    this.groupFilterService.setGroupQuery('');
+    this.searchService.setSearchQuery('');
+  }
 }
