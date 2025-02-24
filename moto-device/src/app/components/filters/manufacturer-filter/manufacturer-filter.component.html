@@ -1,1 +1,10 @@
-<p>manufacturer-filter works!</p>
+<mat-form-field>
+  <mat-label>Fabricante</mat-label>
+  <mat-select (valueChange)="onSelectChange($event)" [(value)]="selectedGroup">
+    @for (deviceManufacturer of manufacturers; track deviceManufacturer) {
+    <mat-option [value]="deviceManufacturer.value">{{
+      deviceManufacturer.viewValue
+    }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

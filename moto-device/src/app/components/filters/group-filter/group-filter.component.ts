@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
 import { GroupFilterService } from '../../../services/filters/group-filter.service';
 import { DeviceGroup } from '../../../shared/types/deviceGroup';
 

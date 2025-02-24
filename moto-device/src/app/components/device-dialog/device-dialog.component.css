@@ -19,6 +19,12 @@
   flex: column;
   width: auto;
 }
+.content {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
+}
 
 .dialog-container {
   display: flex;
@@ -37,7 +43,7 @@
   border-radius: 16px;
   cursor: pointer;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  transition: 1s ease-in-out;
+  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
   text-transform: uppercase;
 }
 
@@ -48,4 +54,20 @@
 .btn-container {
   display: flex;
   justify-content: center;
+}
+.loading {
+  background: grey;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 6px 10px;
+  border: none;
+  width: 50%;
+  height: 15px;
+  justify-self: center;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }

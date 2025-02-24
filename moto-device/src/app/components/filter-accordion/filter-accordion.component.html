@@ -4,17 +4,18 @@
       <mat-panel-title> Filtros </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="content">
-      <div class="btnOptions"></div>
-
-      <app-group-filter />
+      <div class="btn-options">
+        <button (click)="clearFilters()" class="btn-option">LIMPAR</button>
+      </div>
+      <div class="row">
+        <app-group-filter />
+        <app-core-cpu-filter />
+        <app-memory-filter />
+        <app-manufacturer-filter />
+      </div>
       <app-year-filter />
-      <app-core-cpu-filter />
-      <app-memory-filter />
       <app-screen-size-filter />
-      <app-manufacturer-filter />
-      <app-screen-resolution-filter />
-      
-      <button (click)="clearFilters()">LIMPAR</button>
+      <app-phone-or-watch />
     </div>
   </mat-expansion-panel>
 </mat-accordion>

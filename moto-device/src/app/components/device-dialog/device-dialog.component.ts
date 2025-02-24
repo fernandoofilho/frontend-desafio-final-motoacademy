@@ -3,16 +3,18 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Device } from '../../../shared/models/device.model';
 import getSrc from '../../shared/functions/get_src';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 import { jsPDF } from 'jspdf';
 @Component({
   selector: 'app-device-dialog',
-  imports: [CommonModule],
+  imports: [CommonModule, MatProgressBarModule],
   templateUrl: './device-dialog.component.html',
   styleUrl: './device-dialog.component.css',
 })
 export class DeviceDialogComponent implements OnInit {
   dataSource: Device | undefined;
-
+  loadingReport: boolean = false;
   getImageLink(path: string) {
     return getSrc(path);
   }
@@ -25,14 +27,20 @@ export class DeviceDialogComponent implements OnInit {
   }
 
   generatePDF() {
-    if (!this.dataSource) return;
+    this.loadingReport = true;
+
+    if (!this.dataSource) {
+      this.loadingReport = false;
+      return;
+    }
 
     const pdf = new jsPDF('p', 'mm', 'a4');
     const imagePath = getSrc(this.dataSource.src);
     const imgWidth = 180;
     const imgHeight = 160;
     let y = 10;
-    // TODO: achar uma forma de pegar a imagem lá do site (pode ser download)
+
+    // Adiciona a imagem se necessário
     // pdf.addImage(imagePath, 'PNG', 10, y, imgWidth, imgHeight);
     y += imgHeight + 10;
 
@@ -58,7 +66,10 @@ export class DeviceDialogComponent implements OnInit {
       });
     }
 
-    pdf.save(`${this.dataSource.Model}.pdf`);
+    setTimeout(() => {
+      pdf.save(`${this.dataSource?.Model}.pdf`);
+      this.loadingReport = false; 
+    }, 1000);
   }
 
   ngOnInit(): void {}

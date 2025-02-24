@@ -14,15 +14,23 @@
       />
       <div class="description">
         <div class="content" *ngFor="let item of dataSource?.specs | keyvalue">
-          <div *ngIf="item.key.length > 0">
+          <div *ngIf="item.key.length > 0 && item.key != 'imageSrc'">
             <h2>{{ item.key }}:</h2>
-            {{ item.value }}
+            <div class="value">
+              {{ item.value }}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="btn-container">
-    <button (click)="generatePDF()" class="export-btn">EXPORT</button>
+    <button
+      (click)="generatePDF()"
+      [ngClass]="{ loading: loadingReport, 'export-btn': !loadingReport }"
+    >
+      <div *ngIf="!loadingReport">EXPORT</div>
+      <mat-progress-bar *ngIf="loadingReport" mode="buffer"></mat-progress-bar>
+    </button>
   </div>
 </div>
