@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 })
 export class PhoneOrWatchComponent {
   phoneSelected: boolean = true;
-
   switch() {
     this.phoneSelected = !this.phoneSelected;
   }
