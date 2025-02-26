@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.spec-container {
+  display: flex;
+  flex-direction: row;
+}

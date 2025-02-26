@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { YearFilterService } from '../../services/year-filter.service';
-import { MatSliderModule } from '@angular/material/slider';
-import { NgModel } from '@angular/forms';
+import { YearFilterService } from '../../../services/filters/year-filter.service';
 
 @Component({
   selector: 'app-year-filter',
-  standalone: true,
-  imports: [MatSliderModule],
+  standalone: false,
   templateUrl: './year-filter.component.html',
   styleUrl: './year-filter.component.css',
 })

@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid;
+  border-radius: 0.5rem;
+  padding: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  cursor: pointer;
+  justify-content: flex-end;
+}
+
+.image {
+  height: 100px;
+  width: 100px;
+  background-color: lightgray;
+}
+
+.content {
+  flex-grow: 1;
+  background-color: #f0f2f5;
+  margin-left: 16px;
+}
+
+.title .description {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.description {
+  margin-left: 16px;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+}
+.title-skeleton,
+.description-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+.skeleton-item {
+  max-width: 920px;
+}
+
+.title-skeleton {
+  display: flex;
+  justify-content: flex-end;
+  width: 800px;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.description-skeleton {
+  display: flex;
+  justify-content: flex-end;
+  width: 800px;
+  height: 14px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}

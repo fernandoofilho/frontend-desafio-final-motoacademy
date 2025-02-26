@@ -1,0 +1,26 @@
+<div class="container">
+  <button (click)="switch()" class="btn">
+    <div class="label" *ngIf="phoneSelected">
+      <span>
+        <mat-icon
+          class="icon"
+          aria-hidden="false"
+          aria-label="smartphone"
+          fontIcon="smartphone"
+        />
+      </span>
+      <p class="description">Phone</p>
+    </div>
+    <div class="label" *ngIf="!phoneSelected">
+      <span>
+        <mat-icon
+          class="icon"
+          aria-hidden="false"
+          aria-label="watch"
+          fontIcon="watch"
+        />
+      </span>
+      <p class="description">watch</p>
+    </div>
+  </button>
+</div>

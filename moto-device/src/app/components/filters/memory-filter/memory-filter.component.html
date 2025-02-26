@@ -1,0 +1,10 @@
+<mat-form-field>
+  <mat-label>Armazenamento</mat-label>
+  <mat-select (valueChange)="onSelectChange($event)" [(value)]="selectedOption">
+    @for (deviceMemory of selectOptions; track deviceMemory) {
+    <mat-option [value]="deviceMemory.value">{{
+      deviceMemory.viewValue
+    }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

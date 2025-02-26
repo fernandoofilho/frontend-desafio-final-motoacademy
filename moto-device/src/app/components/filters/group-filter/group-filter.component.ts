@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
-import { DeviceGroup } from '../../shared/types/deviceGroup';
-import { GroupFilterService } from '../../services/group-filter.service';
+import { GroupFilterService } from '../../../services/filters/group-filter.service';
+import { DeviceGroup } from '../../../shared/types/deviceGroup';
 
 @Component({
   selector: 'app-group-filter',
-  imports: [MatSelectModule],
+  standalone: false,
   templateUrl: './group-filter.component.html',
   styleUrl: './group-filter.component.css',
 })
 export class GroupFilterComponent {
-  constructor(private groupFilterService: GroupFilterService) {}
+  selectedGroup: string = '';
 
+  constructor(private groupFilterService: GroupFilterService) {
+    this.groupFilterService.groupQuery$.subscribe((value) => {
+      this.selectedGroup = value;
+    });
+  }
   groups: DeviceGroup[] = [
     {
       value: 'Moto G',
@@ -34,7 +38,6 @@ export class GroupFilterComponent {
       viewValue: 'Série Razr',
     },
   ];
-
   onSelectChange(value: string) {
     this.groupFilterService.setGroupQuery(value);
   }
