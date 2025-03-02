@@ -1,3 +1,3 @@
 export default function getSrc(path: string) {
-  return `https://phonedb.net/${path}`;
+  return `http://localhost:3000/assets/images${path.split('img')[1]}`;
 }

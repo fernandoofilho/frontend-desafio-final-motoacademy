@@ -1,11 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { jsPDF } from 'jspdf';
 import { Device } from '../../../shared/models/device.model';
 import getSrc from '../../shared/functions/get_src';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-
-import { jsPDF } from 'jspdf';
+import {
+  extractColorsFromImage,
+  getTopColors,
+} from '../../shared/functions/colors';
 @Component({
   selector: 'app-device-dialog',
   imports: [CommonModule, MatProgressBarModule],
@@ -13,17 +24,38 @@ import { jsPDF } from 'jspdf';
   styleUrl: './device-dialog.component.css',
 })
 export class DeviceDialogComponent implements OnInit {
+  @ViewChild('phoneImage', { static: false }) imageElement!: ElementRef;
+  @ViewChild('backgroundGradient', { static: false })
+  dialogContainer!: ElementRef;
+  pallette: string[] = [];
   dataSource: Device | undefined;
   loadingReport: boolean = false;
-  getImageLink(path: string) {
-    return getSrc(path);
-  }
+  mainTextColor: string = 'black';
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: Device
+    public data: Device,
+    private renderer: Renderer2
   ) {
     this.dataSource = { ...data };
+  }
+
+  updateGradient() {
+    if (!this.pallette || this.pallette.length === 0) return;
+
+    const gradientColors = this.pallette.join(', '); // Une as cores extraídas
+    const gradientStyle = `linear-gradient(45deg, ${gradientColors})`;
+
+    const dialogContainer = document.querySelector(
+      '.dialog-container'
+    ) as HTMLElement;
+    if (dialogContainer) {
+      dialogContainer.style.backgroundImage = gradientStyle;
+    }
+  }
+
+  getImageLink(path: string) {
+    return getSrc(path);
   }
 
   generatePDF() {
@@ -68,9 +100,16 @@ export class DeviceDialogComponent implements OnInit {
 
     setTimeout(() => {
       pdf.save(`${this.dataSource?.Model}.pdf`);
-      this.loadingReport = false; 
+      this.loadingReport = false;
     }, 1000);
   }
 
-  ngOnInit(): void {}
+  async ngOnInit(): Promise<void> {
+    const img = this.getImageLink(this.dataSource?.src || '');
+    const colors = await extractColorsFromImage(img);
+    this.pallette = getTopColors(colors, 25);
+    this.mainTextColor = this.pallette[-1];
+    this.updateGradient();
+    console.log(this.dataSource?.specs);
+  }
 }

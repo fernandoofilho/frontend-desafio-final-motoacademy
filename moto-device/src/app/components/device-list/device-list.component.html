@@ -1,5 +1,5 @@
 <div class="devices-list" *ngIf="!isLoading">
-  <div *ngFor="let device of deviceLists">
+  <div *ngFor="let device of deviceLists" class="device">
     <app-device-card
       [title]="getDeviceName(device)"
       [description]="getDeviceDescription(device)"

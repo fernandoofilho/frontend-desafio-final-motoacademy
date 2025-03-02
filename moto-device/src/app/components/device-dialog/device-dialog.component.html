@@ -1,36 +1,53 @@
-<div class="dialog-container" style="padding: 16px">
-  <div class="container" id="container">
-    <div class="title">
-      <h1>
-        {{ dataSource?.Model }}
-      </h1>
-    </div>
-    <div class="content-container">
-      <img
-        *ngIf="dataSource"
-        src="{{ getImageLink(dataSource.src) }}"
-        alt=""
-        class="device-dialog-image"
-      />
-      <div class="description">
-        <div class="content" *ngFor="let item of dataSource?.specs | keyvalue">
-          <div *ngIf="item.key.length > 0 && item.key != 'imageSrc'">
-            <h2>{{ item.key }}:</h2>
-            <div class="value">
-              {{ item.value }}
+<div #backgroundGradient class="dialog-container" style="padding: 10px">
+  <div class="view">
+    <div class="container" id="container">
+      <div class="title" style="color: {{ this.mainTextColor }};">
+        <h1>
+          {{ dataSource?.Model }}
+        </h1>
+      </div>
+      <div class="content-container">
+        <div class="img-container">
+          <img
+            id="phoneImage"
+            #phoneImage
+            *ngIf="dataSource"
+            src="{{ getImageLink(dataSource.src) }}"
+            alt=""
+            class="device-dialog-image"
+          />
+        </div>
+        <div class="description">
+          <div class="grid">
+            <div class="card" *ngFor="let item of dataSource?.specs | keyvalue">
+              <div
+                *ngIf="
+                  item.key?.trim() &&
+                  item.value?.trim() &&
+                  !['imageSrc', 'Brand', 'Model'].includes(item.key)
+                "
+              >
+                <h2>{{ item.key }}:</h2>
+                <div class="value">
+                  {{ item.value }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="btn-container">
-    <button
-      (click)="generatePDF()"
-      [ngClass]="{ loading: loadingReport, 'export-btn': !loadingReport }"
-    >
-      <div *ngIf="!loadingReport">EXPORT</div>
-      <mat-progress-bar *ngIf="loadingReport" mode="buffer"></mat-progress-bar>
-    </button>
+    <!-- <div class="btn-container">
+      <button
+        (click)="generatePDF()"
+        [ngClass]="{ loading: loadingReport, 'export-btn': !loadingReport }"
+      >
+        <div *ngIf="!loadingReport">EXPORT</div>
+        <mat-progress-bar
+          *ngIf="loadingReport"
+          mode="buffer"
+        ></mat-progress-bar>
+      </button>
+    </div> -->
   </div>
 </div>

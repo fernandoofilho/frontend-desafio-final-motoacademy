@@ -57,7 +57,8 @@ export class DeviceListComponent implements OnDestroy, OnInit {
     private searchService: SearchService,
     private FilterGroupService: GroupFilterService,
     private filterYearService: YearFilterService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    
   ) {}
 
   ngOnInit(): void {

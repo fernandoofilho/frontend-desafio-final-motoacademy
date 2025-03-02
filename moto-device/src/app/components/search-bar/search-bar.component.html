@@ -1,15 +1,25 @@
 <div class="search-bar">
-  <!-- <mat-icon matPrefix>search</mat-icon> -->
-  <div class="icon-container">
-    <i
-      class="fa-solid fa-magnifying-glass"
-      style="font-size: 24px; color: #637587"
-    ></i>
-  </div>
+  <button
+    matTooltip="{{ altText }}"
+    (click)="changeView()"
+    class="change-search-btn"
+  >
+    <span class="material-symbols-outlined ask-AI" *ngIf="option === 'Text'">
+      network_intelligence
+    </span>
+    <mat-icon fontIcon="smartphone ask-AI" *ngIf="option === 'AI'"></mat-icon>
+  </button>
   <input
     class="input-container"
-    placeholder="Busque um modelo"
+    placeholder="{{ text }}"
     [(ngModel)]="searchQuery"
     (input)="onSearchChange($event)"
   />
+  <div class="icon-container">
+    <i
+      class="fa-solid fa-magnifying-glass icon"
+      style="font-size: 24px; color: #637587; cursor: pointer"
+      (click)="execute()"
+    ></i>
+  </div>
 </div>

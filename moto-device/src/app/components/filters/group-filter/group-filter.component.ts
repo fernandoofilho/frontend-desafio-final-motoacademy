@@ -18,23 +18,23 @@ export class GroupFilterComponent {
   }
   groups: DeviceGroup[] = [
     {
-      value: 'Moto G',
+      value: 'Moto G ',
       viewValue: 'Série G',
     },
     {
-      value: 'Moto E',
+      value: 'Moto E ',
       viewValue: 'Série E',
     },
     {
-      value: 'Moto X',
+      value: 'Moto X ',
       viewValue: 'Série X',
     },
     {
-      value: 'Moto Edge',
+      value: 'Moto Edge ',
       viewValue: 'Série Edge',
     },
     {
-      value: 'RAZR',
+      value: 'RAZR ',
       viewValue: 'Série Razr',
     },
   ];
