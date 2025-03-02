@@ -24,6 +24,16 @@ export class ApiService {
       params = params.set('group', search.group);
     }
 
+    if (search.CPU) {
+      params = params.set('cpu', search.CPU);
+    }
+    if (search.manufacturer) {
+      params = params.set('manufacturer', search.manufacturer);
+    }
+    if (search.phone) {
+      params = params.set('isPhone', search.phone);
+    }
+
     return this.http.get<Device[]>(url, { params });
   }
 
