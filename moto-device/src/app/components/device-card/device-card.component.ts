@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeviceDialogComponent } from '../device-dialog/device-dialog.component';
 import { Device } from '../../../shared/models/device.model';
@@ -19,10 +19,10 @@ export class DeviceCardComponent {
   openDialog() {
     const dialogRef = this.dialog.open(DeviceDialogComponent, {
       data: this.deviceData,
-      width: '70%',
+      // width: '70%',
       height: 'auto',
-      maxWidth: '90vw',
-      minWidth: '300px',
+      // maxWidth: '90vw',
+      minWidth: '700px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {});

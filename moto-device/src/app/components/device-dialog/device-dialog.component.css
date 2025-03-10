@@ -1,9 +1,47 @@
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 100%;
+  }
+  25% {
+    background-position: 25% 75%;
+  }
+  50% {
+    background-position: 50% 50%;
+  }
+  75% {
+    background-position: 75% 25%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
 .container {
   padding: 20px;
   max-height: 800px;
   overflow-x: hidden;
   overflow-y: hidden;
-
 }
 .view {
   background-color: #fff;
@@ -12,7 +50,7 @@
 
 .title {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 .description {
   overflow-y: auto;
@@ -61,6 +99,7 @@
   width: 300px;
   margin-right: 32px;
   max-height: 400px;
+  cursor: pointer;
 }
 
 .content-container {
@@ -79,20 +118,8 @@
   justify-content: center;
   flex-direction: column;
   background-size: 300% 300%;
-  animation: gradientAnimation 6s ease infinite;
-  transition: background 0.5s ease-in-out;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  animation: gradientAnimation 20s ease infinite;
+  transition: background 10s ease-in-out;
 }
 
 .export-btn {
@@ -119,19 +146,168 @@
   display: flex;
   justify-content: center;
 }
-.loading {
-  background: grey;
+
+.chat-container {
+  width: 90%;
+  margin: auto;
+  margin-top: 10px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px #b29dd9;
+  background: #fff;
+}
+.device-page-container {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.device-page-container button {
+  width: 100%;
+  height: 50px;
+  background-color: #ff0000;
+  transition: 0.3s ease-in-out;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 12px;
+}
+.device-page-container button:hover {
+  width: 100%;
+  height: 50px;
+  background-color: #5a0000;
+  border-radius: 15px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  background: linear-gradient(270deg, #79c7e3, #b29dd9, #79c7e3);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 0.5s infinite alternate;
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.AIbutton {
+  padding: 10px 15px;
+  border: none;
   color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   font-weight: bold;
-  padding: 6px 10px;
+  width: 120px;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(270deg, #79c7e3, #b29dd9, #79c7e3);
+  background-size: 200% 200%;
+  animation: gradient 1s infinite alternate;
+}
+
+.loading {
+  padding: 10px 15px;
   border: none;
-  width: 50%;
-  height: 15px;
-  justify-self: center;
-  border-radius: 16px;
+  background: #5a0000;
+  color: white;
   cursor: pointer;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  text-transform: uppercase;
-  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+}
+
+.AIbutton:disabled {
+  background: #a0c4ff;
+  cursor: not-allowed;
+}
+
+.AIbutton.loading {
+  width: 50px;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.response {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-left: 4px solid #79c7e3;
+  border-radius: 4px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.response::-webkit-scrollbar {
+  width: 8px;
+}
+
+.response::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.response::-webkit-scrollbar-thumb {
+  background: #79c7e3;
+  border-radius: 4px;
+  border: 2px solid #e0e0e0;
+}
+
+.response::-webkit-scrollbar-thumb:hover {
+  background: #5aaecb;
+}
+
+
+.downloadIcon {
+  cursor: pointer;
+  color: #ff0000;
+  transition: 0.3s ease-in-out;
+}
+.downloadIcon:hover {
+  cursor: pointer;
+  color: #5a0000;
+}
+
+.spinner-report {
+  width: 10px !important;
+  height: 10px !important;
+  border: 2px solid rgb(145, 11, 11);
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
 }

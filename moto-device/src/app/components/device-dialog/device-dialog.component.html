@@ -1,10 +1,29 @@
 <div #backgroundGradient class="dialog-container" style="padding: 10px">
   <div class="view">
     <div class="container" id="container">
-      <div class="title" style="color: {{ this.mainTextColor }};">
+      <div
+        class="title"
+        style="color: black; display: flex; align-items: center"
+      >
         <h1>
-          {{ dataSource?.Model }}
+          <a (click)="navigateToDevicePage()" style="cursor: pointer;">
+            {{
+              (dataSource?.Model?.length ?? 0) > 35
+                ? dataSource?.Model?.slice(0, 35) + "..."
+                : dataSource?.Model ?? ""
+            }}
+          </a>
         </h1>
+
+        <span *ngIf="!loadingReport">
+          <i
+            class="material-icons downloadIcon"
+            matTooltip="Download"
+            (click)="generatePDF()"
+            >download</i
+          >
+        </span>
+        <span *ngIf="loadingReport" class="spinner-report"></span>
       </div>
       <div class="content-container">
         <div class="img-container">
@@ -12,42 +31,43 @@
             id="phoneImage"
             #phoneImage
             *ngIf="dataSource"
+            (click)="navigateToDevicePage()"
             src="{{ getImageLink(dataSource.src) }}"
             alt=""
             class="device-dialog-image"
           />
         </div>
-        <div class="description">
-          <div class="grid">
-            <div class="card" *ngFor="let item of dataSource?.specs | keyvalue">
-              <div
-                *ngIf="
-                  item.key?.trim() &&
-                  item.value?.trim() &&
-                  !['imageSrc', 'Brand', 'Model'].includes(item.key)
-                "
-              >
-                <h2>{{ item.key }}:</h2>
-                <div class="value">
-                  {{ item.value }}
-                </div>
-              </div>
-            </div>
+
+        <div class="chat-container">
+          <label for="question">Faça uma pergunta sobre este device</label>
+          <div class="input-group">
+            <input
+              id="question"
+              type="text"
+              [placeholder]="placeholderText"
+              [(ngModel)]="userQuestion"
+              [disabled]="isLoading"
+              (keyup.enter)="askQuestion()"
+            />
+            <button
+              (click)="askQuestion()"
+              [disabled]="isLoading"
+              [ngClass]="{ loading: isLoading }"
+              class="AIbutton"
+            >
+              <span *ngIf="isLoading" class="spinner"></span>
+              <span *ngIf="!isLoading">Perguntar</span>
+            </button>
+          </div>
+          <div
+            class="response"
+            *ngIf="modelResponse"
+            [innerHTML]="modelResponse | formatText"
+          >
+            {{ modelResponse }}
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class="btn-container">
-      <button
-        (click)="generatePDF()"
-        [ngClass]="{ loading: loadingReport, 'export-btn': !loadingReport }"
-      >
-        <div *ngIf="!loadingReport">EXPORT</div>
-        <mat-progress-bar
-          *ngIf="loadingReport"
-          mode="buffer"
-        ></mat-progress-bar>
-      </button>
-    </div> -->
   </div>
 </div>

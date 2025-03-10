@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from '../../services/filters/search.service';
@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchOptionsEnum } from '../../shared/enums/search-options.enum';
 import { FilterManagerService } from '../../services/filters/filter-manager.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
@@ -15,29 +15,43 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
 })
-export class SearchBarComponent {
-  searchQuery: string = '';
-
+export class SearchBarComponent implements OnInit, OnDestroy {
   private aiText = 'Pergunte para a AI 🧠';
-  private modelText = 'Busque um Modelo 📱';
-
   text = this.aiText;
+  private modelText = 'Busque um Modelo 📱';
+  private textSubject = new BehaviorSubject<string>(this.text);
+  isLoading: boolean = false;
+  searchQuery: string = '';
+  Loading$!: Observable<boolean>;
   altText = this.modelText;
   option = SearchOptionsEnum.AI;
-  private textSubject = new BehaviorSubject<string>(this.text);
+  private destroy$ = new Subject<void>();
 
   constructor(
     private searchService: SearchService,
-    showFilterManagerService: FilterManagerService
+    private filterManager: FilterManagerService
   ) {
     this.textSubject.subscribe((newText) => {
       const showFilter = newText !== this.aiText;
-      showFilterManagerService.setShowFilter(showFilter);
+      filterManager.setShowFilter(showFilter);
+    });
+  }
+  ngOnInit(): void {
+    this.Loading$ = this.filterManager.loading$;
+    this.Loading$.pipe(takeUntil(this.destroy$)).subscribe((loading) => {
+      this.isLoading = loading;
     });
   }
 
-  execute(){}
-
+  execute() {
+    if (this.option === SearchOptionsEnum.AI) {
+      this.filterManager.setLoading(true);
+      this.filterManager.setExecuteAISearch(true);
+    } else {
+      this.filterManager.setLoading(true);
+      this.filterManager.setExecuteSearch(true);
+    }
+  }
 
   onSearchChange(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -79,9 +93,10 @@ export class SearchBarComponent {
       }
     }, 10);
   }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  
 }
-// onSearchChange(event: Event): void {
-//   const input = event.target as HTMLInputElement;
-//   this.searchQuery = input.value;
-//   console.log("Search query:", this.searchQuery, " Aguardando integração com backend");
-// }

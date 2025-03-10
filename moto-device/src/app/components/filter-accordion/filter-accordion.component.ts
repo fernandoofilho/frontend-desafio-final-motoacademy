@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterAccordionComponent {
-  readonly panelOpenState = signal(false);
+  readonly panelOpenState = signal(true);
   showAccordion: boolean = false;
 
   constructor(

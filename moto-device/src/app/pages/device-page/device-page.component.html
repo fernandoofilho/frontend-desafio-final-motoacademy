@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="title">
+    <h1>{{ this.deviceData?.Model }}</h1>
+    <button (click)="openBottomSheet()">AI</button>
+  </div>
+
+  <img [src]="getImageLink(this.deviceData?.src || '')" alt="" />
+
+  <div class="content">
+    <ng-container *ngIf="isLoading">
+      <div
+        class="content-container skeleton"
+        *ngFor="let _ of [1, 2, 3, 4, 5, 6]"
+      >
+        <div class="title"></div>
+        <div class="description"></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading">
+      <div
+        class="content-container"
+        *ngFor="let item of DeviceDescription | keyvalue"
+      >
+        <div
+          class="nested-container"
+          *ngIf="typeof item.value === 'object' && item.value !== null; else simpleItem"
+        >
+          <div class="nested-title">{{ item.key }}</div>
+          <div class="divider"></div>
+          <div class="item" *ngFor="let subItem of item.value | keyvalue">
+            <div class="title">{{ subItem.key }}</div>
+            <div class="description">{{ subItem.value }}</div>
+          </div>
+        </div>
+
+        <ng-template #simpleItem>
+          <div class="item">
+            <div class="title">{{ item.key }}</div>
+            <div class="description">{{ item.value }}</div>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+  </div>
+</div>

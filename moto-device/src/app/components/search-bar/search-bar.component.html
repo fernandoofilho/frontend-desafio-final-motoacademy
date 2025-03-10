@@ -1,4 +1,4 @@
-<div class="search-bar">
+<div class="search-bar" [ngClass]="{ intelligence: option === 'AI' }">
   <button
     matTooltip="{{ altText }}"
     (click)="changeView()"
@@ -15,11 +15,13 @@
     [(ngModel)]="searchQuery"
     (input)="onSearchChange($event)"
   />
-  <div class="icon-container">
+  <div class="icon-container" (click)="!isLoading ? execute() : ''">
     <i
       class="fa-solid fa-magnifying-glass icon"
       style="font-size: 24px; color: #637587; cursor: pointer"
-      (click)="execute()"
+      *ngIf="!isLoading"
     ></i>
+
+    <div class="spinner" *ngIf="isLoading"></div>
   </div>
 </div>

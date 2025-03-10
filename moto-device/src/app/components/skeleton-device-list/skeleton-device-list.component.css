@@ -1,13 +1,22 @@
+.skeleton-item {
+  display: flex;
+  justify-content: center;
+}
 .container {
   display: flex;
+
   flex-direction: row;
-  border: 2px solid;
+  justify-content: center;
+  border: 2px solid rgba(255, 0, 0, 0.2);
+  width: 300px;
+  /* min-height: 200px; */
+
   border-radius: 0.5rem;
   padding: 3px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
   cursor: pointer;
-  justify-content: flex-end;
+  transition: 0.3s ease-in-out;
 }
 
 .image {
@@ -44,14 +53,11 @@
   animation: loading 1.5s infinite;
   border-radius: 4px;
 }
-.skeleton-item {
-  max-width: 920px;
-}
 
 .title-skeleton {
   display: flex;
   justify-content: flex-end;
-  width: 800px;
+  width: 150px;
   height: 20px;
   margin-bottom: 10px;
 }
@@ -59,7 +65,7 @@
 .description-skeleton {
   display: flex;
   justify-content: flex-end;
-  width: 800px;
+  width: 100px;
   height: 14px;
 }
 
@@ -69,5 +75,21 @@
   }
   100% {
     background-position: 100% 0;
+  }
+}
+.devices-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 990px;
+  padding-top: 20px;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+@media (min-width: 960px) {
+  .devices-list {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
