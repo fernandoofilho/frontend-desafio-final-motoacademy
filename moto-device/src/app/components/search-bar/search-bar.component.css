@@ -1,34 +1,91 @@
 @import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
 
+@keyframes neon-glow {
+  0% {
+    box-shadow: 0 0 5px rgb(121 199 227);
+  }
+  50% {
+    box-shadow: 0 0 15px rgb(178 157 217), 0 0 25px rgb(121 199 227);
+  }
+  100% {
+    box-shadow: 0 0 5px rgb(121 199 227);
+  }
+}
 
-.search-bar{
+@keyframes led-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #ff0000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: -5px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.search-bar {
   height: 48px;
   min-width: 160px;
   width: 928px;
+  border-radius: 0px 12px 12px 0px;
   display: flex;
-  background-color: #F0F2F5;
-  border-radius: 12px;
+  background-color: #f0f2f5;
+}
+.search-bar.intelligence {
+  border: 2px solid transparent;
+  background: linear-gradient(90deg, rgb(121 199 227), rgb(178 157 217));
+  background-size: 200% 200%;
+  animation: led-move 3s infinite linear, neon-glow 2s infinite ease-in-out;
 }
 
-.icon-container{
-  background-color: #F0F2F5;
+.icon-container {
+  background-color: #f0f2f5;
   padding-left: 16px;
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
+  border-radius: 0px 12px 12px 0px;
   width: 40px;
   display: flex;
   align-items: center;
-
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
 }
 
-.input-container{
-  background-color: #F0F2F5;
+.icon-container:hover {
+  background-color: #ff0000;
+}
+
+.icon-container:hover .icon {
+  color: #fff !important;
+}
+
+.icon {
+  transition: 0.3s ease-in-out;
+}
+
+.input-container {
+  background-color: #f0f2f5;
   display: flex;
   justify-content: left;
   /* align-content: center; */
   padding: 8px 16px 8px 8px;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
   border: 0px;
   font-weight: 400;
   font-size: 16px;
@@ -37,3 +94,11 @@
   width: 100%;
 }
 
+.ask-AI {
+  /* width: 60px; */
+}
+
+.change-search-btn {
+  background-color: white;
+  border: none;
+}

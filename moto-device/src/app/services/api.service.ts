@@ -24,6 +24,16 @@ export class ApiService {
       params = params.set('group', search.group);
     }
 
+    if (search.CPU) {
+      params = params.set('cpu', search.CPU);
+    }
+    if (search.manufacturer) {
+      params = params.set('manufacturer', search.manufacturer);
+    }
+    if (search.phone) {
+      params = params.set('isPhone', search.phone);
+    }
+
     return this.http.get<Device[]>(url, { params });
   }
 
@@ -31,5 +41,29 @@ export class ApiService {
     const url = `${environment.apiUrl}random`;
 
     return this.http.get<Device[]>(url);
+  }
+  get(id: string | null): Observable<Device> {
+    const url = `${environment.apiUrl}device/${id}`;
+    return this.http.get<Device>(url);
+  }
+
+  askIntelligence(
+    question: string,
+    model: string
+  ): Observable<{ response: string }> {
+    const url = `${environment.apiUrl}askIntelligence`;
+    return this.http.post<{ response: string }>(url, { question, model });
+  }
+
+  filterIntelligence(question: string): Observable<Device[]> {
+    const url = `${environment.apiUrl}findByAI`;
+    return this.http.post<Device[]>(url, { question });
+  }
+
+  getDeviceDataIntelligence(
+    model: string
+  ): Observable<{ [x: string]: string }> {
+    const url = `${environment.apiUrl}getDeviceDataIntelligence`;
+    return this.http.post<{ [x: string]: string }>(url, { model });
   }
 }
