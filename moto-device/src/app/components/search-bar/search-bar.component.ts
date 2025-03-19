@@ -17,14 +17,14 @@ import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   private aiText = 'Pergunte para a AI 🧠';
-  text = this.aiText;
   private modelText = 'Busque um Modelo 📱';
+  text = this.modelText;
   private textSubject = new BehaviorSubject<string>(this.text);
   isLoading: boolean = false;
   searchQuery: string = '';
   Loading$!: Observable<boolean>;
-  altText = this.modelText;
-  option = SearchOptionsEnum.AI;
+  altText = this.aiText;
+  option = SearchOptionsEnum.TEXT;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -98,5 +98,4 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  
 }

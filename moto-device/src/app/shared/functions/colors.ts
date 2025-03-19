@@ -38,7 +38,7 @@ export function getTopColors(colors: string[], topN: number = 5): string[] {
     if (!match) return;
 
     const [r, g, b] = match.map(Number);
-
+    
     const threshold = 30;
     if (
       (r <= threshold && g <= threshold && b <= threshold) || // Preto

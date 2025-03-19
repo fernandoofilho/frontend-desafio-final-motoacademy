@@ -15,14 +15,14 @@
           </a>
         </h1>
 
-        <span *ngIf="!loadingReport">
+        <!-- <span *ngIf="!loadingReport">
           <i
             class="material-icons downloadIcon"
             matTooltip="Download"
             (click)="generatePDF()"
             >download</i
           >
-        </span>
+        </span> -->
         <span *ngIf="loadingReport" class="spinner-report"></span>
       </div>
       <div class="content-container">
