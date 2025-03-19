@@ -1,0 +1,25 @@
+.devices-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 990px;
+  padding-top: 20px;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.devices-list::-webkit-scrollbar {
+  display: none;
+}
+
+.device {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 960px) {
+  .devices-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,10 @@
+<div class="container" (click)="openDialog()">
+  <div class="container-img" *ngIf="image">
+    <img *ngIf="image" src="{{ image }}" alt="" class="image" />
+  </div>
+  <div class="content">
+    <div class="title">
+      {{ title }}
+    </div>
+  </div>
+</div>

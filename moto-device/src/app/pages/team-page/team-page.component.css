@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    gap: 20px; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    margin-top: 20px;
+    height: 90%;
+    justify-content: center;
+    align-items: center;
+}
+  
+  .team-mate {
+    flex: 0 1 300px; 
+    text-align: center; 
+  }
+  

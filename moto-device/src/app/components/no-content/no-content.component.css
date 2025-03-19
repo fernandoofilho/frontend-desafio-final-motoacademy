@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+h2{
+    display: flex;
+    justify-content: center;
+}
+.img {
+  clip-path: inset(0 0 40px 0);
+}

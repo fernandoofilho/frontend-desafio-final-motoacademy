@@ -1,3 +1,15 @@
-<div>
-  <h3>Search Query: {{ searchQuery | async }}</h3>
+<div class="devices-list" *ngIf="!isLoading">
+  <div *ngFor="let device of deviceLists" class="device">
+    <app-device-card
+      [title]="getDeviceName(device)"
+      [description]="getDeviceDescription(device)"
+      [deviceData]="device"
+      [image]="getImageLink(device.src)"
+    />
+  </div>
 </div>
+<div *ngIf="isLoading">
+  <app-skeleton-device-list></app-skeleton-device-list>
+</div>
+
+<div *ngIf="noContent">Sem resultados para sua pesquisa :(</div>

@@ -9,7 +9,7 @@
 .container2{
   display: block;
   width: 960px;
-  height: 753px;
+  /* height: 753px; */
   justify-content: center;
 
 }
@@ -20,6 +20,13 @@
   width: 100%;
   height: 48px;
   padding: 12px 16px 12px 16px;
+}
+
+.filter-bar{
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 12px 16px 12px 32px;
 }
 
 .cards-container{
