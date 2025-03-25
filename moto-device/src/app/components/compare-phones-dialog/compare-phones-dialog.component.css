@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 27px;
+  padding: 2rem;
+  transition: all ease 0.5s;
+}
+.closed {
+  height: 300px;
+}
+.open {
+  height: 750px;
+}
+.phone {
+  width: 250px;
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+}
+
+button {
+  width: 100%;
+  padding: 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.device-info img {
+  width: 100px;
+  height: auto;
+  margin: 10px 0;
+}
