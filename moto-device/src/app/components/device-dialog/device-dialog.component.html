@@ -6,7 +6,7 @@
         style="color: black; display: flex; align-items: center"
       >
         <h1>
-          <a (click)="navigateToDevicePage()" style="cursor: pointer;">
+          <a (click)="navigateToDevicePage()" style="cursor: pointer">
             {{
               (dataSource?.Model?.length ?? 0) > 35
                 ? dataSource?.Model?.slice(0, 35) + "..."
@@ -15,14 +15,20 @@
           </a>
         </h1>
 
-        <span *ngIf="!loadingReport">
-          <i
-            class="material-icons downloadIcon"
-            matTooltip="Download"
-            (click)="generatePDF()"
-            >download</i
-          >
-        </span>
+        <a
+          class="icon-container"
+          style="cursor: pointer; border: none;"
+          [href]="createYouTubeQuery()"
+          target="_blank"
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png"
+            alt="YouTube"
+            class="icon icon-2"
+            style="width: 32px; height: 24px"
+          />
+      </a>
+
         <span *ngIf="loadingReport" class="spinner-report"></span>
       </div>
       <div class="content-container">

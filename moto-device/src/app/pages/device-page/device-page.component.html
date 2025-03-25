@@ -4,11 +4,20 @@
   <div class="title">
     <h1>{{ this.deviceData?.Model }}</h1>
     <button (click)="openBottomSheet()">AI</button>
+    <span *ngIf="!isLoading">
+      <i
+        class="material-icons downloadIcon"
+        matTooltip="Download"
+        (click)="generatePDF()"
+        *ngIf="!isLoading"
+        >download</i
+      >
+    </span>
   </div>
 
   <img [src]="getImageLink(this.deviceData?.src || '')" alt="" />
 
-  <div class="content">
+  <div class="content" id="containerPage">
     <ng-container *ngIf="isLoading">
       <div
         class="content-container skeleton"

@@ -199,3 +199,16 @@
     width: 100%;
   }
 }
+
+
+
+.downloadIcon {
+  cursor: pointer;
+  color: #ff0000;
+  transition: 0.3s ease-in-out;
+}
+.downloadIcon:hover {
+  cursor: pointer;
+  color: #5a0000;
+}
+  
