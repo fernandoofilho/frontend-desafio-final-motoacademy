@@ -6,6 +6,9 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { ComparePhonesDialogComponent } from '../compare-phones-dialog/compare-phones-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'app-navbar',
   imports: [MatToolbarModule, FontAwesomeModule, MatIconModule],

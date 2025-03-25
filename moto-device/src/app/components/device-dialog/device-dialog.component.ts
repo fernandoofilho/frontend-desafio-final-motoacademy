@@ -136,6 +136,7 @@ export class DeviceDialogComponent implements OnInit {
     }
     return null;
   }
+
   getImageLink(path: string) {
     return getSrc(path);
   }

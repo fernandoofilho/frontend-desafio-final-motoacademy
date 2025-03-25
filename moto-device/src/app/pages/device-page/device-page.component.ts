@@ -14,6 +14,8 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ApiService } from '../../services/api.service';
 import getSrc from '../../shared/functions/get_src';
 import { getImageDimensions } from '../../shared/functions/getImageDimensions';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 @Component({
   selector: 'app-device-page',
@@ -116,6 +118,22 @@ export class DevicePageComponent implements OnInit {
           pdf.save('Report.pdf');
         })
         .catch((error) => console.error('Erro ao carregar a imagem', error));
+    const element = document.getElementById("containerPage");
+
+    if (!element) {
+      console.error("Elemento não encontrado!");
+      return;
+    }
+
+    html2canvas(element, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      const imgWidth = 210; 
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("documento.pdf");
     });
   }
 }

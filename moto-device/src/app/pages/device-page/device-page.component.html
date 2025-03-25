@@ -12,6 +12,12 @@
         *ngIf="!isLoading"
         >download</i
       >
+<div   class="container">
+  <div class="title">
+    <h1>{{ this.deviceData?.Model }}</h1>
+    <button (click)="openBottomSheet()">AI</button>
+    <span *ngIf="true">
+      <i class="material-icons downloadIcon" matTooltip="Download" (click)="generatePDF()">download</i>
     </span>
   </div>
 
