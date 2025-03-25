@@ -22,6 +22,7 @@ import { ApiService } from '../../services/api.service';
 import { FormatTextPipe } from '../../shared/pipes/format-text.pipe';
 import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-device-dialog',
   imports: [
@@ -30,6 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FormsModule,
     FormatTextPipe,
     MatTooltipModule,
+    MatIconModule
   ],
   templateUrl: './device-dialog.component.html',
   styleUrl: './device-dialog.component.css',
@@ -125,7 +127,15 @@ export class DeviceDialogComponent implements OnInit {
       dialogContainer.style.backgroundImage = gradientStyle;
     }
   }
-
+  createYouTubeQuery() {
+    if (this.dataSource && this.dataSource.Model) {
+      const modelQuery = this.dataSource.Model.split(' ').join('+');
+      const query = `review+motorola+${modelQuery}`;
+      
+      return `https://www.youtube.com/results?search_query=${query}`;
+    }
+    return null;
+  }
   getImageLink(path: string) {
     return getSrc(path);
   }

@@ -1,0 +1,59 @@
+<div class="container" [ngClass]="open ? 'open' : 'closed'">
+  <div class="phone">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Buscar Device</mat-label>
+        <input
+          #input
+          type="text"
+          placeholder="Pick one"
+          matInput
+          [formControl]="myControl"
+          [matAutocomplete]="auto"
+          (input)="filter1()"
+          (focus)="filter1()"
+        />
+        <mat-autocomplete requireSelection #auto="matAutocomplete">
+          @for (option of filteredOptions; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+    <button (click)="searchDevice(1)">Buscar</button>
+
+    <div class="device-info" *ngIf="device1">
+      <img [src]="device1.src" alt="Device 1" />
+      <h3>{{ device1.Model }}</h3>
+    </div>
+  </div>
+  <button (click)="changeState()">close</button>
+  <div class="phone">
+    <form>
+      <mat-form-field>
+        <mat-label>Buscar Device</mat-label>
+        <input
+          #input
+          type="text"
+          placeholder="Pick one"
+          matInput
+          [formControl]="myControl"
+          [matAutocomplete]="auto"
+          (input)="filter2()"
+          (focus)="filter2()"
+        />
+        <mat-autocomplete requireSelection #auto="matAutocomplete">
+          @for (option of filteredOptions; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+    <button (click)="searchDevice(2)">Buscar</button>
+
+    <div class="device-info" *ngIf="device2">
+      <img [src]="device2.src" alt="Device 2" />
+      <h3>{{ device2.Model }}</h3>
+    </div>
+  </div>
+</div>
