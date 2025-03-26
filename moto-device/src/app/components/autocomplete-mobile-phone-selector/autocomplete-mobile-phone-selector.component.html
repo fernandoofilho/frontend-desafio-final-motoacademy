@@ -1,0 +1,28 @@
+<mat-form-field class="full-width" *ngIf="!disabled">
+  <mat-label>Selecione um dispositivo</mat-label>
+  <input
+    type="text"
+    matInput
+    [formControl]="searchControl"
+    [matAutocomplete]="auto"
+  />
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [displayWith]="displayFn"
+    (optionSelected)="handleSelect($event.option.value)"
+  >
+    <mat-option
+      *ngFor="let device of filteredDevices$ | async"
+      [value]="device"
+    >
+      {{ device.Model }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
+<div *ngIf="disabled && selectedDevice">
+  {{ selectedDevice.Model }}
+</div>
+
+<div *ngIf="disabled && !selectedDevice">Selecione um device</div>

@@ -1,12 +1,13 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Device } from '../../../shared/models/device.model';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ApiService } from '../../services/api.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
+import { Device } from '../../../shared/models/device.model';
+import { PhoneComparerService } from '../../services/phone-comparer.service';
+import { AutocompleteMobilePhoneSelectorComponent } from '../autocomplete-mobile-phone-selector/autocomplete-mobile-phone-selector.component';
+import getSrc from '../../shared/functions/get_src';
 @Component({
   selector: 'app-compare-phones-dialog',
   imports: [
@@ -16,63 +17,70 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatInputModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
+    AutocompleteMobilePhoneSelectorComponent,
   ],
   templateUrl: './compare-phones-dialog.component.html',
   styleUrl: './compare-phones-dialog.component.css',
 })
-export class ComparePhonesDialogComponent {
+export class ComparePhonesDialogComponent implements OnInit {
+  open = false;
   searchTerm1: string = '';
   searchTerm2: string = '';
   device1: Device | null = null;
   device2: Device | null = null;
-  @ViewChild('input1')
-  input1!: ElementRef<HTMLInputElement>;
-  @ViewChild('input2')
-  input2!: ElementRef<HTMLInputElement>;
-  open = false;
+  firstSelected: boolean = false;
+  secondSelected: boolean = false;
   myControl = new FormControl('');
   options: string[] = ['One', 'Two', 'Three', 'Four', 'Five'];
   filteredOptions: string[];
-  changeState() {
-    this.open = !this.open;
+
+  ngOnInit(): void {
+    this.phoneComparerService.device1$.subscribe((device) => {
+      this.device1 = device;
+      this.firstSelected = !!device;
+      this.updateOpenState();
+    });
+
+    this.phoneComparerService.device2$.subscribe((device) => {
+      this.device2 = device;
+      this.secondSelected = !!device;
+      this.updateOpenState();
+    });
   }
-  constructor(private apiService: ApiService) {
+
+  updateOpenState(): void {
+    this.open = !!(
+      this.device1 &&
+      this.device2 &&
+      (this.firstSelected || this.secondSelected)
+    );
+  }
+
+  constructor(private phoneComparerService: PhoneComparerService) {
     this.filteredOptions = this.options.slice();
   }
 
-  filter1(): void {
-    const filterValue = this.input1.nativeElement.value.toLowerCase();
-    this.filteredOptions = this.options.filter((o) =>
-      o.toLowerCase().includes(filterValue)
-    );
-  }
-
-  filter2(): void {
-    const filterValue = this.input2.nativeElement.value.toLowerCase();
-    this.filteredOptions = this.options.filter((o) =>
-      o.toLowerCase().includes(filterValue)
-    );
-  }
-
-  fetchDevice(searchTerm: string): Device | null {
-    if (!searchTerm) return null;
-    return {
-      Model: `Smartphone ${searchTerm}`,
-      src: 'https://via.placeholder.com/100',
-      specs: {
-        ram: '6GB RAM',
-        storage: '128GB Storage',
-        processor: 'Snapdragon 888',
-      },
-      _id: '',
-      info: {},
-    };
-  }
-  searchDevice(deviceNumber: number) {
-    if (deviceNumber === 1) {
-      this.device1 = this.fetchDevice(this.searchTerm1);
-    } else {
-      this.device2 = this.fetchDevice(this.searchTerm2);
+  changeStateFirstDevice() {
+    this.firstSelected = !this.firstSelected;
+    if (!this.firstSelected) {
+      this.device1 = null;
+      this.phoneComparerService.clearDevice1();
+      this.open = false;
     }
+  }
+  changeStateSecondDevice() {
+    this.secondSelected = !this.secondSelected;
+    if (!this.secondSelected) {
+      this.device2 = null;
+      this.phoneComparerService.clearDevice2();
+      this.open = false;
+    }
+  }
+  resetSearch() {
+    this.changeStateFirstDevice();
+    this.changeStateSecondDevice();
+  }
+  getSrc(str: string): string {
+    return getSrc(str);
   }
 }
