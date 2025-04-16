@@ -1,0 +1,133 @@
+<div class="container" [ngClass]="open ? 'open' : 'closed'">
+  <div class="phone" *ngIf="!open">
+    <app-autocomplete-mobile-phone-selector
+      [modelPosition]="1"
+      [disabled]="firstSelected"
+    />
+    <button (click)="changeStateFirstDevice()">
+      {{ !firstSelected ? "Selecionar" : "Cancelar" }}
+    </button>
+    <div class="device-info" *ngIf="device1 && firstSelected">
+      <img [src]="getSrc(device1.src)" alt="Device 1" />
+    </div>
+  </div>
+
+  <div class="phone" *ngIf="!open">
+    <app-autocomplete-mobile-phone-selector
+      [modelPosition]="2"
+      [disabled]="secondSelected"
+    />
+
+    <button (click)="changeStateSecondDevice()">
+      {{ !secondSelected ? "Selecionar" : "Cancelar" }}
+    </button>
+
+    <div class="device-info" *ngIf="device2 && secondSelected">
+      <img [src]="getSrc(device2.src)" alt="Device 2" />
+    </div>
+  </div>
+  <div class="container-comparer" *ngIf="open">
+    <div class="phone-comparer">
+      <div>
+        <div class="device-info" *ngIf="device1 && firstSelected">
+          <h3>
+            {{
+              device1.Model.length > 25
+                ? (device1.Model | slice : 0 : 25) + "..."
+                : device1.Model
+            }}
+          </h3>
+          <img
+            [src]="getSrc(device1.src)"
+            alt="Device 1"
+            class="device-img"
+            style="cursor: pointer"
+            (click)="navigateToDevicePage(device1._id)"
+          />
+          <div class="text">Principais Características</div>
+          <div *ngIf="isLoading1" class="content-container">
+            <div *ngFor="let i of [1, 2, 3, 4]">
+              <div class="skeleton title"></div>
+              <div class="skeleton description"></div>
+              <div class="skeleton description"></div>
+            </div>
+          </div>
+          <div
+            class="content-container"
+            *ngFor="let item of device1Description | keyvalue | slice : 0 : 4"
+          >
+            <div
+              class="nested-container"
+              *ngIf="typeof item.value === 'object' && item.value !== null; else simpleItem"
+            >
+              <div class="nested-title">{{ item.key }}</div>
+              <div class="divider"></div>
+              <div class="item" *ngFor="let subItem of item.value | keyvalue">
+                <div class="title">{{ subItem.key }}</div>
+                <div class="description">{{ subItem.value }}</div>
+              </div>
+            </div>
+            <ng-template #simpleItem>
+              <div class="item">
+                <div class="title">{{ item.key }}</div>
+                <div class="description">{{ item.value }}</div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="device-info" *ngIf="device2 && secondSelected">
+          <h3>
+            {{
+              device2.Model.length > 25
+                ? (device2.Model | slice : 0 : 25) + "..."
+                : device2.Model
+            }}
+          </h3>
+          <img
+            [src]="getSrc(device2.src)"
+            alt="Device 2"
+            style="cursor: pointer"
+            class="device-img"
+            (click)="navigateToDevicePage(device2._id)"
+          />
+          <div class="text">Principais Características</div>
+          <div *ngIf="isLoading2" class="content-container">
+            <div *ngFor="let i of [1, 2, 3, 4]">
+              <div class="skeleton title"></div>
+              <div class="skeleton description"></div>
+              <div class="skeleton description"></div>
+            </div>
+          </div>
+          <div
+            class="content-container"
+            *ngFor="let item of device2Description | keyvalue | slice : 0 : 4"
+          >
+            <div
+              class="nested-container"
+              *ngIf="typeof item.value === 'object' && item.value !== null; else simpleItem"
+            >
+              <div class="nested-title">{{ item.key }}</div>
+              <div class="divider"></div>
+              <div class="item" *ngFor="let subItem of item.value | keyvalue">
+                <div class="title">{{ subItem.key }}</div>
+                <div class="description">{{ subItem.value }}</div>
+              </div>
+            </div>
+            <ng-template #simpleItem>
+              <div class="item">
+                <div class="title">{{ item.key }}</div>
+                <div class="description">{{ item.value }}</div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container">
+      <button (click)="resetSearch()">Comparar Outros</button>
+    </div>
+  </div>
+</div>

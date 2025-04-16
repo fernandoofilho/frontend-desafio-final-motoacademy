@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://backend-desafio-final-motoacademy-gggqihobya-uc.a.run.app",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": { "^/api": "" }
+  }
+}
